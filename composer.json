@@ -1,0 +1,23 @@
+{
+    "name": "cvo-technologies/webshop-customer-users",
+    "type": "cakephp-plugin",
+    "require": {
+        "croogo/croogo": "3.0.*@dev"
+    },
+    "authors": [
+        {
+            "name": "Marlin Cremers",
+            "email": "m.cremers@cvo-technologies.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Webshop\\CustomerUsers\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webshop\\CustomerUsers\\Test\\": "tests"
+        }
+    }
+}
