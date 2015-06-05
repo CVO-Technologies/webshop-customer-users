@@ -1,27 +1,31 @@
 <?php
 
-App::uses('CustomerAccessProvider', 'Webshop.CustomerAccessProvider');
-App::uses('CustomerUser', 'WebshopCustomerUser.Model');
+namespace Webshop\CustomerUsers\CustomerAccessProvider;
 
-class CustomerUserAccessProvider extends CustomerAccessProvider {
+use Cake\Controller\Controller;
+use Cake\ORM\TableRegistry;
+use Webshop\CustomerAccessProvider\CustomerAccessProvider;
 
-	public function __construct() {
-		$this->CustomerUser = ClassRegistry::init('WebshopCustomerUsers.CustomerUser');
-	}
+class CustomerUserAccessProvider extends CustomerAccessProvider
+{
 
-	public function getAccessibleCustomers(Controller $Controller) {
-		if ($Controller->Auth->user() === null) {
-			return false;
-		}
+    public function __construct()
+    {
+        $this->CustomerUsers = TableRegistry::get('Webshop/CustomerUsers.CustomerUsers');
+    }
 
-		return array_values($this->CustomerUser->find('list', array(
-			'fields' => array(
-				$this->CustomerUser->alias . '.customer_id'
-			),
-			'conditions' => array(
-				$this->CustomerUser->alias . '.user_id' => $Controller->Auth->user('id')
-			)
-		)));
-	}
+    public function getAccessibleCustomers(Controller $Controller)
+    {
+        if ($Controller->Auth->user() === null) {
+            return false;
+        }
+
+        return $this->CustomerUsers->find('list', [
+            'keyField' => $this->CustomerUsers->alias() . '.customer_id'
+        ])
+            ->where([
+                $this->CustomerUsers->alias() . '.user_id' => $Controller->Auth->user('id')
+            ])->toArray();
+    }
 
 }

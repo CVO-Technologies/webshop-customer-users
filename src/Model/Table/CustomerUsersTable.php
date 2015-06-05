@@ -4,33 +4,28 @@ namespace Webshop\CustomerUsers\Model\Table;
 
 use Cake\ORM\Table;
 
-class CustomerUsersTable extends Table {
+class CustomerUsersTable extends Table
+{
 
-	public $actsAs = array(
-		'Containable'
-	);
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
 
-	public $belongsTo = array(
-		'Customer' => array(
-			'className' => 'Webshop.Customer',
-			'foreignKey' => 'customer_id'
-		),
-		'User' => array(
-			'className' => 'Users.User',
-			'foreignKey' => 'user_id'
-		)
-	);
+        $this->belongsTo('Customers', [
+            'className' => 'Webshop.Customers',
+        ]);
+        $this->belongsTo('Users', [
+            'className' => 'Croogo/Users.Users',
+        ]);
+    }
 
-	public function isIndividualCustomer($userId) {
-		return ($this->find('count', array(
-			'conditions' => array(
-				$this->alias . '.user_id' => $userId,
-				'Customer.type' => 'individual'
-			),
-			'contain' => array(
-				'Customer'
-			)
-		)) >= 1);
+
+    public function isIndividualCustomer($userId)
+    {
+		return ($this->find()->where([
+            $this->alias() . '.user_id' => $userId,
+            'Customers.type' => 'individual'
+        ])->contain(['Customers'])->count() >= 1);
 	}
 
 }

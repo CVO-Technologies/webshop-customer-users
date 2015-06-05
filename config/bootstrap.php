@@ -1,21 +1,28 @@
 <?php
 
+use Croogo\Croogo\Croogo;
+use Croogo\Croogo\CroogoNav;
+
 CroogoNav::add('webshop-customer-dashboard', 'users', array(
 	'title' => __d('webshop_customer_users', 'Users'),
 	'url' => array(
 		'prefix' => 'panel',
-		'plugin' => 'webshop_customer_users',
-		'controller' => 'customer_users',
+		'plugin' => 'Webshop/CustomerUsers',
+		'controller' => 'CustomerUsers',
 		'action' => 'index'
 	),
 ));
 
-Croogo::hookBehavior('Customer', 'WebshopCustomerUsers.CustomerWithUsers');
+Croogo::hookBehavior('Customer', 'Webshop/CustomerUsers.CustomerWithUsers');
 
-Croogo::hookComponent('*', 'WebshopCustomerUsers.CustomerUsers');
+Croogo::hookComponent('*', [
+    'CustomerUsersComponent' => [
+        'className' => 'Webshop/CustomerUsers.CustomerUsers'
+    ]
+]);
 
 Croogo::mergeConfig('Webshop.customer_access_providers', array(
 	'CustomerUsers' => array(
-		'provider' => 'WebshopCustomerUsers.CustomerUser'
+		'provider' => 'Webshop/CustomerUsers.CustomerUser'
 	),
 ));
