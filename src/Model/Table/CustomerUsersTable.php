@@ -1,6 +1,10 @@
 <?php
 
-class CustomerUser extends AppModel {
+namespace Webshop\CustomerUsers\Model\Table;
+
+use Cake\ORM\Table;
+
+class CustomerUsersTable extends Table {
 
 	public $actsAs = array(
 		'Containable'
