@@ -1,25 +1,28 @@
 <?php
 
-App::uses('AppController', 'Controller');
+namespace Webshop\CustomerUsers\Controller;
 
-class CustomerUsersController extends AppController {
+use Cake\Event\Event;
+use Croogo\Croogo\Controller\CroogoAppController;
+
+class CustomerUsersController extends CroogoAppController {
 
 	public $components = array(
 		'Paginator'
 	);
 
-	public function beforeFilter() {
-		parent::beforeFilter();
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
 
-		$this->Security->unlockedActions = array(
-			'register'
-		);
+//		$this->Security->unlockedActions = array(
+//			'register'
+//		);
 	}
 
 	public function index() {
-		$customerUsers = $this->Paginator->paginate('CustomerUser', array(
-			'CustomerUser.user_id' => $this->Auth->user('id')
-		));
+		$customerUsers = $this->Paginator->paginate($this->CustomerUsers, [
+			'CustomerUsers.user_id' => $this->Auth->user('id')
+        ]);
 
 		if ($this->request->is('requested')) {
 			return $customerUsers;
