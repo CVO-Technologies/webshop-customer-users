@@ -1,17 +1,14 @@
 <?php
 echo $this->Form->create('CustomerUser', array(
-	'inputDefaults' => array(
-		'div' => 'form-group',
-		'label' => array(
-			'class' => 'col col-md-3 control-label'
-		),
-		'wrapInput' => 'col col-md-9',
-		'class' => 'form-control'
-	),
 	'class' => 'well form-horizontal'
 ));
+$this->Form->templates([
+    'div' => 'form-group',
+    'wrapInput' => 'col col-md-9',
+    'class' => 'form-control'
+]);
 echo $this->Form->hidden('CustomerUser.user_id', array(
-	'value' => AuthComponent::user('id')
+	'value' => $loggedInUser->id
 ));
 echo $this->element('Webshop.form/customer', array(
 	'prefix' => 'Customer.',
