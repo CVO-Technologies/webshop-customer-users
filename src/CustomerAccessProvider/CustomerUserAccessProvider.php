@@ -21,7 +21,7 @@ class CustomerUserAccessProvider extends CustomerAccessProvider
         }
 
         return $this->CustomerUsers->find('list', [
-            'keyField' => $this->CustomerUsers->alias() . '.customer_id'
+            'valueField' => 'customer_id'
         ])
             ->where([
                 $this->CustomerUsers->alias() . '.user_id' => $Controller->Auth->user('id')
