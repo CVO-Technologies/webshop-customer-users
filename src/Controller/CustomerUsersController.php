@@ -3,7 +3,7 @@
 namespace Webshop\CustomerUsers\Controller;
 
 use Cake\Event\Event;
-use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Core\Controller\CroogoAppController;
 
 class CustomerUsersController extends CroogoAppController {
 

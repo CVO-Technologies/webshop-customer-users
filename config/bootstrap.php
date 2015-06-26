@@ -1,9 +1,9 @@
 <?php
 
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\Croogo;
+use Croogo\Core\Nav;
 
-CroogoNav::add('webshop-customer-dashboard', 'users', array(
+Nav::add('webshop-customer-dashboard', 'users', array(
 	'title' => __d('webshop_customer_users', 'Users'),
 	'url' => array(
 		'prefix' => 'panel',
