@@ -3,17 +3,25 @@
 namespace Webshop\CustomerUsers\CustomerAccessProvider;
 
 use Cake\Controller\Controller;
-use Cake\ORM\TableRegistry;
 use Webshop\CustomerAccessProvider\CustomerAccessProvider;
 
+/**
+ * @property \Webshop\CustomerUsers\Model\Table\CustomerUsersTable CustomerUsers
+ */
 class CustomerUserAccessProvider extends CustomerAccessProvider
 {
 
-    public function __construct()
+    /**
+     * {@inheritDoc}
+     */
+    public function initialize()
     {
-        $this->CustomerUsers = TableRegistry::get('Webshop/CustomerUsers.CustomerUsers');
+        $this->loadModel('Webshop/CustomerUsers.CustomerUsers');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getAccessibleCustomers(Controller $Controller)
     {
         if ($Controller->Auth->user() === null) {
@@ -27,5 +35,4 @@ class CustomerUserAccessProvider extends CustomerAccessProvider
                 $this->CustomerUsers->alias() . '.user_id' => $Controller->Auth->user('id')
             ])->toArray();
     }
-
 }
